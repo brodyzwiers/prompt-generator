@@ -1,44 +1,28 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-
-const promptLibrary = [
-  {
-    task: "Write a cold outreach email for lead generation",
-    funnel: "awareness",
-    automation: "medium",
-    prompt: "Craft a cold outreach email to introduce PLACEHOLDER_SERVICE to PLACEHOLDER_TARGET_AUDIENCE. Include a hook, value prop, and low-friction CTA."
-  },
-  {
-    task: "Create a win-back email for churned customers",
-    funnel: "retention",
-    automation: "medium",
-    prompt: "Write a win-back email for PLACEHOLDER_CUSTOMER_TYPE who hasn’t purchased in PLACEHOLDER_TIME. Offer a benefit or incentive to re-engage."
-  },
-  {
-    task: "Write a brand origin story for the About page",
-    funnel: "awareness",
-    automation: "low",
-    prompt: "Write a compelling origin story for PLACEHOLDER_BRAND based on PLACEHOLDER_MOTIVATION and PLACEHOLDER_MARKET_PROBLEM."
-  },
-  {
-    task: "Generate SEO-optimized blog title and meta description",
-    funnel: "awareness",
-    automation: "high",
-    prompt: "Based on the topic PLACEHOLDER_TOPIC, generate an SEO-optimized blog title and meta description using primary keyword PLACEHOLDER_KEYWORD."
-  }
-];
+import './globals.css'
 
 export default function PromptGenerator() {
   const [prompt, setPrompt] = useState("");
   const [task, setTask] = useState("");
   const [funnel, setFunnel] = useState("");
   const [automation, setAutomation] = useState("");
+
+  const promptLibrary = [
+    {
+      task: "Write a cold outreach email for lead generation",
+      funnel: "awareness",
+      automation: "medium",
+      prompt: "Craft a cold outreach email to introduce PLACEHOLDER_SERVICE to PLACEHOLDER_TARGET_AUDIENCE. Include a hook, value prop, and low-friction CTA."
+    },
+    {
+      task: "Create a win-back email for churned customers",
+      funnel: "retention",
+      automation: "medium",
+      prompt: "Write a win-back email for PLACEHOLDER_CUSTOMER_TYPE who hasn’t purchased in PLACEHOLDER_TIME. Offer a benefit or incentive to re-engage."
+    }
+  ];
 
   const generatePrompt = () => {
     const match = promptLibrary.find(
@@ -68,49 +52,36 @@ export default function PromptGenerator() {
   };
 
   return (
-    <div className="grid gap-4 p-4">
-      <Card>
-        <CardContent className="grid gap-4 p-4">
-          <Input
-            placeholder="Describe your task (e.g., cold email, onboarding flow)"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-          />
-
-          <Select onValueChange={setFunnel}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select funnel stage" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="awareness">Awareness</SelectItem>
-              <SelectItem value="consideration">Consideration</SelectItem>
-              <SelectItem value="conversion">Conversion</SelectItem>
-              <SelectItem value="retention">Retention</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select onValueChange={setAutomation}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select automation level" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="low">Low</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="high">High</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Button onClick={generatePrompt}>Generate Prompt</Button>
-          <Button onClick={exportPrompt}>Download Prompt</Button>
-
-          <Textarea
-            placeholder="Your generated prompt will appear here"
-            value={prompt}
-            readOnly
-            className="min-h-[120px]"
-          />
-        </CardContent>
-      </Card>
+    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+      <h1>Prompt Generator</h1>
+      <input
+        type="text"
+        placeholder="Enter your task"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+        style={{ width: '100%', padding: '8px', marginBottom: '8px' }}
+      />
+      <select onChange={(e) => setFunnel(e.target.value)} style={{ width: '100%', padding: '8px', marginBottom: '8px' }}>
+        <option value="">Select funnel stage</option>
+        <option value="awareness">Awareness</option>
+        <option value="consideration">Consideration</option>
+        <option value="conversion">Conversion</option>
+        <option value="retention">Retention</option>
+      </select>
+      <select onChange={(e) => setAutomation(e.target.value)} style={{ width: '100%', padding: '8px', marginBottom: '8px' }}>
+        <option value="">Select automation level</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      <button onClick={generatePrompt} style={{ marginRight: '10px', padding: '10px' }}>Generate Prompt</button>
+      <button onClick={exportPrompt} style={{ padding: '10px' }}>Download Prompt</button>
+      <textarea
+        value={prompt}
+        readOnly
+        placeholder="Prompt output will appear here"
+        style={{ width: '100%', height: '120px', marginTop: '10px', padding: '10px' }}
+      />
     </div>
   );
 }
